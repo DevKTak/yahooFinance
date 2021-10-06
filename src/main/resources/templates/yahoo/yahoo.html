@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Yahoo Finance</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+</head>
+<body class="bg-light">
+	<div class="container">
+		<div class="row mt-5 justify-content-center">
+			<div class="col-12">
+				<form name="yahoo" action="/yahoo" th:action="@{/yahoo}" method="post" class="form-inline">
+					<div class="form-group">
+						<label for="stockName">종목명</label>
+						<input type="text" style="margin: 0 7px;" name="stockName" id="stockName" placeholder="찾을 종목의 이름을 쓰시오." class="form-control" required="required">
+						<button type="submit" class="btn btn-danger">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 검색
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="row mt-5 justify-content-center">
+			<div class="col-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading text-center"><Strong>종목</Strong></div>
+		  			<div class="panel-body text-center">
+		    			<h3 th:text="${stockName}">종목명</h3>
+	   				</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-5 justify-content-center">
+			<div class="col-6">
+
+				<div class="panel panel-info">
+					<div class="panel-heading text-center"><strong>최저가</strong></div>
+					<table class="table table-default table-hover table-striped" th:object="${lowValueInfoMap}">
+						<tr>
+							<th>연/월</th>
+							<th>일별 최저가</th>
+						</tr>
+						<tr>
+							<td th:if="${lowValueInfoMap}" th:text="*{lowValueDate}">연/월</td>
+							<td th:if="${lowValueInfoMap}" th:text="*{lowValue}">일별 최저가</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="panel panel-warning">
+					<div class="panel-heading text-center"><strong>종가</strong></div>
+					<table class="table table-default table-hover table-striped">
+						<tr>
+							<td th:text="${prevClose}">종가</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="panel panel-danger">
+					<div class="panel-heading text-center"><strong>시가총액</strong></div>
+					<table class="table table-default table-hover table-striped">
+						<tr>
+							<td th:text="${findMarketCap}">시가총액</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="col-6">
+				<div class="panel panel-success">
+					<div class="panel-heading text-center"><strong>배당금</strong></div>
+					<table class="table table-default table-hover table-striped">
+						<tr>
+							<th>연/월/횟수</th>
+							<th>배당금</th>
+						</tr>
+						<tr th:each="dList : ${diviInfoList}">
+							<td th:if="${dList.diviSum == 0.00}">없음</td>
+							<td th:if="${dList.diviSum == 0.00}">없음</td>
+							<td th:unless="${dList.diviSum == 0.00}" th:text="${dList.diviDateWithCnt}"></td>
+							<td th:unless="${dList.diviSum == 0.00}" th:text="${dList.diviSum}"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav class="navbar navbar-default">
+	  <div class="container text-center">
+	  	<br/>
+	  	<div class="row" style="width: 100%;">
+	  		<div class="col-md-9" style="margin-top: 10px;">
+	  			<br>
+			  	<p style="font-family: NSR_R; text-align: left;"><span style="color: #ff2424; font-weight: bold; font-family: tahoma; font-style: italic;">DevKTak</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			  	   대표번호 : 010-2693-1124&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			  	   대표자 : 정유리&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			  	   책임자 : 박경탁&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			  	   개인정보관리책임자 : 박경탁</p>
+			    <p style="font-family: NSR_R; font-size: 13px;">Copyright © 2020 DevKTak Co., Ltd. ALL RIGHTS RESERVED.</p>
+			</div>
+			<div class="col-md-3 text-left">
+				<h5><img alt="카카오톡" src="/images/kakao.png" width="39px" height="39px" />
+				tak24&nbsp;&nbsp;
+				<img alt="인스타그램" src="/images/test2.png" width="39px" height="39px" />
+				k___t.p24</h5>
+				<h5><img alt="네이버" src="/images/naver.png" width="35px" height="35px" />
+				qkrrudxkr77@naver.com</h5>
+			</div>
+	    </div>
+	    <br/>
+	  </div>
+	</nav>
+
+	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
