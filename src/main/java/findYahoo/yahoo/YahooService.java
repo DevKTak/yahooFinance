@@ -23,10 +23,10 @@ public class YahooService {
 	/**
 	 * 최저가
 	 */
-	public HashMap<String, Object> lowValueByStock(String stockName) {
+	public Map<String, Object> lowValueByStock(String stockName, Calendar from, Calendar to) {
 		try {
 			stock = YahooFinance.get(stockName);
-			HashMap<String, Object> lowValueMap = stock.getLowValue(_DEFAULT_FROM, _DEFAULT_TO, Interval.DAILY);
+			HashMap<String, Object> lowValueMap = stock.getLowValue(from, to, Interval.DAILY);
 			
 			return lowValueMap;
 		} catch (IOException e) {
@@ -192,13 +192,13 @@ public class YahooService {
 			stock = YahooFinance.get(stockName);
 			BigDecimal marketCapB = stock.getStats().getMarketCap();
 
-			log.debug("시가총액 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> : {}", marketCapB.toString());
 
 			if (marketCapB != null) {
 				long marketCapL = marketCapB.longValue();
 				double marketCapD = 0.0d;
-				String marketCapS = ""; 
-				
+				String marketCapS = "";
+				log.debug("시가총액 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> : {}", marketCapB.toString());
+
 //			log.info("시가총액 나누기전 =>>> " + marketCapL);
 				
 				marketCapL /= 1000000;

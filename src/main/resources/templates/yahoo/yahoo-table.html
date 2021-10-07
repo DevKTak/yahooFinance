@@ -1,61 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>우린 깐부잖아~</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <!-- 합쳐지고 최소화된 최신 CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
   <!-- 부가적인 테마 -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
 
   <style>
       table, th, td {
-          border: 1px solid black;
+          border: 2px solid black;
           border-collapse: collapse;
           text-align: center;
       }
   </style>
 </head>
 <body>
-  <div style="display: flex; flex-direction: column;">
+  <div style="display: flex; flex-direction: column; margin-top: 16px;">
     <form method="post" th:action th:object="${yahooStock}">
-      <div class="form-group" style="display: flex; width: 100%; flex-direction: row;">
-        <label for="stockName">게임명 (ex. 오징어게임)</label>
-        <input type="text" id="stockName" style="margin: 0 7px;" th:field="*{stockName}" placeholder="참여하실 게임을 선택하시기 바랍니다." class="form-control" required="required">
-        <button type="submit" class="btn btn-danger">
-          <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 검색
-        </button>
+      <div class="form-group" style="display: flex; width: 100%; flex-direction: row; text-align: center; align-items: baseline;">
+        <div style="width: 15%;">
+          <label for="stockName">게임명 (ex. 오징어게임)</label>
+        </div>
+        <div style="width: 75%;">
+          <input type="text" id="stockName" style="margin: 0 7px;" th:field="*{stockName}" placeholder="참여하실 게임을 선택하시기 바랍니다."
+                 class="form-control" required="required" th:text="${error}">
+        </div>
+        <div style="width: 10%;">
+          <button type="submit" class="btn btn-danger">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 검색
+          </button>
+        </div>
       </div>
 
-      <table style="width:100%">
+      <table style="width:100%" height="150">
         <tr>
-          <td colspan="2">시가총액</td>
+          <th colspan="2" style="background: cornflowerblue;">시가총액</th>
           <td colspan="2" th:text="*{findMarketCap}" style="background: yellow;"></td>
           <td colspan="2">자산</td>
           <td colspan="2">7천3백만 달러</td>
           <td>부채</td>
-          <td colspan="2">4천2백만 달러</td>
+          <td colspan="2">29번 임무가 무엇인가</td>
           <td>실자산</td>
           <td colspan="2">3천1백만 달러</td>
         </tr>
         <tr>
-          <th rowspan="3" th:text="*{stockName}" style="background: yellow;">종목명</th>
+          <th rowspan="3" th:text="*{stockName}" style="background: #63ffc9;">종목명</th>
           <td rowspan="2">설립연도</td>
           <td rowspan="2">상장연도</td>
-          <th colspan="3">최저가</th>
+          <th colspan="3" style="background: cornflowerblue;">최저가</th>
           <td rowspan="2">종가</td>
           <td rowspan="2">매입가</td>
-          <td rowspan="2">매입예상<br/>(%)</td>
+          <td rowspan="2">매입예상 (%)</td>
           <td colspan="2">최저가 수정</td>
           <td>부채비율</td>
           <td colspan="2">57%</td>
         </tr>
         <tr>
-          <td>상장후</td>
-          <td>2005이후</td>
-          <td>2020년</td>
+          <th style="background: cornflowerblue;">상장 후</th>
+          <th style="background: cornflowerblue;">2005년 이후</th>
+          <th style="background: cornflowerblue;">2020년</th>
           <td>금액</td>
           <td>날짜</td>
           <td rowspan="2">발행주</td>
@@ -64,38 +71,54 @@
         <tr>
           <td>1995</td>
           <td>2007</td>
-<!--          <td th:text="*{lowValueInfoList[0]['lowValueDate']}">08/12</td>-->
-          <td>08/12</td>
-          <td>(3~4월)</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <th:block th:each="infoMap : *{lowValueInfoList}">
+            <td th:text="${infoMap.lowValueDate}" style="background: yellow;">08/12</td>
+          </th:block>
+          <td th:unless="${dummy}">더미1</td>
+          <td th:unless="${dummy}">더미2</td>
+          <th style="background: cornflowerblue;">(3~4월)</th>
+          <td>거기! 456번!</td>
+          <td>4단계: 구슬 게임</td>
+          <td style="background: orangered; font-weight: bold;">5단계: 죽음의 정유리 징검다리 게임~</td>
+          <td>6단계: 오징어 게임</td>
+          <td>7단계: 오징어 게임2</td>
         </tr>
         <tr>
           <td>3</td>
           <td>27</td>
           <td>15년</td>
-<!--          <td th:text="*{lowValueInfoList[0]['lowValue']}">0.32</td>-->
-          <td>0.32</td>
-          <td>1.17</td>
+          <th:block th:each="infoMap : *{lowValueInfoList}">
+            <td th:text="${infoMap.lowValue}" style="background: yellow;">08/12</td>
+          </th:block>
+          <td th:unless="${dummy}">더미3</td>
+          <td th:unless="${dummy}">더미4</td>
+          <td th:text="*{lowValueInfoMap['lowValue']}" style="background: yellow">1.17</td>
           <td>신청</td>
-          <td></td>
-          <td>3단계</td>
-          <td>1</td>
-          <td>2단계</td>
+          <td>자네 아직도 사람을 믿나???</td>
+          <td>3단계: 줄다리기 게임</td>
+          <td>이러다 우리 다 죽어~</td>
+          <td>2단계: 달고나 게임</td>
           <td>6</td>
-          <td>1단계</td>
-          <td>teste</td>
+          <td>1단계: 무궁화 꽃이 피었습니다.</td>
+          <td>이제 그만해~</td>
         </tr>
       </table>
     </form>
   </div>
 
-  <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <div layout:fragment="content">
+    <script type="text/javascript">
+      $(function () {
+      });
+    </script>
+  </div>
+
+<!--  <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>-->
+<!--  &lt;!&ndash; 합쳐지고 최소화된 최신 자바스크립트 &ndash;&gt;-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>-->
 </body>
 </html>
