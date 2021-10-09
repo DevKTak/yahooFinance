@@ -363,11 +363,11 @@ public class Stock {
          int year = history.get(tempI).getDate().get(1);
          int month = history.get(tempI).getDate().get(2) + 1;
 
-         System.out.println("\n");
+       /*  System.out.println("\n");
          System.out.println("=============== " + this.symbol + " ===============");
          System.out.println("\nDate ===> " + year + "년 " + month + "월  | " + "최저가 ===> " + lowValue + "\n");
          System.out.println("========================================");
-         System.out.println("\n");
+         System.out.println("\n");*/
 
          HashMap<String, Object> map = new HashMap<String, Object>();
          map.put("lowValueDate", String.valueOf(year).substring(2) + "/" + (month < 10 ? "0" : "") + month);
