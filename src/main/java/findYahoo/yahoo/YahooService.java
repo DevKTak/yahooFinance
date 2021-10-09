@@ -36,6 +36,9 @@ public class YahooService {
 		}
 	}
 
+	/**
+	 * 최저가 YY/MM, 가격 (상장 후, 2005년 이후)
+	 */
 	public List<Map<String, Object>> lowValueByStockStartYear(String stockName) {
 		try {
 			stock = YahooFinance.get(stockName);

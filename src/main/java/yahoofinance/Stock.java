@@ -342,39 +342,38 @@ public class Stock {
     }
     
     public HashMap<String, Object> getLowValue(Calendar from, Calendar to, Interval interval) throws IOException {
-    	HistQuotes2Request hist= new HistQuotes2Request(this.symbol, from, to, interval);
-    	List<HistoricalQuote> history = hist.getResult();
+        HistQuotes2Request hist= new HistQuotes2Request(this.symbol, from, to, interval);
+        List<HistoricalQuote> history = hist.getResult();
+//        log.info("{} : ", history);
 
-    	String temp;
+        String temp;
         int tempI = 0;
         double lowValue = 10000000d;
-         
+
         for (int i = 0; i < history.size(); i++) {
-//        	temp = history.get(i).getClose().setScale(2, RoundingMode.HALF_EVEN).doubleValue(); // 소수 2번째 자리까지 반올림 BigDecimal => double 형변환
-        	temp = String.format("%.2f", history.get(i).getClose().doubleValue()); // 소수 2번째 자리까지 반올림 BigDecimal => double 형변환
-//        	System.out.println("최저가 =>>> " + temp);
-        	if (Double.valueOf(temp) < lowValue) {
-        		lowValue = Double.valueOf(temp);
-        		tempI = i;
-        	}
+    //        	temp = history.get(i).getClose().setScale(2, RoundingMode.HALF_EVEN).doubleValue(); // 소수 2번째 자리까지 반올림 BigDecimal => double 형변환
+          temp = String.format("%.2f", history.get(i).getClose().doubleValue()); // 소수 2번째 자리까지 반올림 BigDecimal => double 형변환
+//          log.info("{}년 {}월 {}일 | 최저가 = {}", history.get(i).getDate().get(1), history.get(i).getDate().get(2) + 1, history.get(i).getDate().get(5), temp);
+
+          if (Double.valueOf(temp) <= lowValue) {
+            lowValue = Double.valueOf(temp);
+            tempI = i;
+          }
         }
-         
          int year = history.get(tempI).getDate().get(1);
          int month = history.get(tempI).getDate().get(2) + 1;
-         
+
          System.out.println("\n");
          System.out.println("=============== " + this.symbol + " ===============");
-         System.out.println("\nDate ===> " + year + "년 " + month + "월  | "
-         						+ "최저가 ===> " + lowValue + "\n");
+         System.out.println("\nDate ===> " + year + "년 " + month + "월  | " + "최저가 ===> " + lowValue + "\n");
          System.out.println("========================================");
          System.out.println("\n");
-         
+
          HashMap<String, Object> map = new HashMap<String, Object>();
          map.put("lowValueDate", String.valueOf(year).substring(2) + "/" + (month < 10 ? "0" : "") + month);
          map.put("lowValue", lowValue);
-         
+
          return map;
-    	
     }
     
     /**
