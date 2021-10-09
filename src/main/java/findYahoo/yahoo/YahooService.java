@@ -2,6 +2,7 @@ package findYahoo.yahoo;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
@@ -187,38 +188,47 @@ public class YahooService {
 	/**
 	 * 시가총액
 	 */
-	public String findtMarketCap(String stockName) {
+	public String findMarketCap(String stockName) {
 		try {
 			stock = YahooFinance.get(stockName);
 			BigDecimal marketCapB = stock.getStats().getMarketCap();
 
-
 			if (marketCapB != null) {
-				long marketCapL = marketCapB.longValue();
-				double marketCapD = 0.0d;
-				String marketCapS = "";
-				log.debug("시가총액 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> : {}", marketCapB.toString());
+				log.info("marketCapB = {}", marketCapB);
 
-//			log.info("시가총액 나누기전 =>>> " + marketCapL);
-				
-				marketCapL /= 1000000;
-				
-//			log.info("시가총액 나눈 후 =>>> " + marketCapL);
-				
-				marketCapS = String.valueOf(marketCapL);
-				int marketCapLenth = marketCapS.length();
-				marketCapS = marketCapS.substring(0, marketCapLenth - 3) + "." + marketCapS.substring(marketCapLenth - 3, marketCapLenth);
-				
-//			log.info("시가총액 문자열 =>>> " + marketCapS);
-				
-				marketCapD = Double.parseDouble(marketCapS);
-				marketCapS = String.format("%.1f", marketCapD) + "B";
-				
-//			log.info("시가총액 반올림 =>>> " + marketCapS);
+				double marketCapD = marketCapB.doubleValue();
+				log.info("marketCapD1 = {}", marketCapD);
 
-				marketCapS = marketCapB.toString(); // 두번째 작업에서 변경 된 부분 (풀넘버 나오게 요청)
+				marketCapD /= 1000000;
+				log.info("marketCapD2 = {}", marketCapD);
 
-				return marketCapS;
+
+				DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+				String result = decimalFormat.format(marketCapD) + "M";
+				log.info("result = {}", result);
+
+				return result;
+
+//				log.info("시가총액 나누기전 =>>> " + marketCapL);
+//
+//				marketCapL /= 1000000;
+//
+//				log.info("시가총액 나눈 후 =>>> " + marketCapL);
+//
+//				marketCapS = String.valueOf(marketCapL);
+//				int marketCapLenth = marketCapS.length();
+//
+//				// ATHX StringIndexOutOfBoundsException: begin 0, end -1, length 2 에러 남 (나중에 확인해 볼 것!!) ALNA, ACOR
+//				marketCapS = marketCapS.substring(0, marketCapLenth - 3) + "." + marketCapS.substring(marketCapLenth - 3, marketCapLenth);
+//
+////			log.info("시가총액 문자열 =>>> " + marketCapS);
+//
+//				marketCapD = Double.parseDouble(marketCapS);
+//				marketCapS = String.format("%.1f", marketCapD) + "B";
+//
+////			log.info("시가총액 반올림 =>>> " + marketCapS);
+
+//				return marketCapS;
 			}
 			return "없음";
 		} catch (IOException e) {

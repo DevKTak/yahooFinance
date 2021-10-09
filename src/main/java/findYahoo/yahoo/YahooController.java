@@ -39,7 +39,7 @@ public class YahooController {
 			Map<String, Object> lowValueInfoMap = yahooService.lowValueByStock(stockName, from, to); // 최저가
 			List<HashMap<String, Object>> diviInfoList = yahooService.dividendByStock(stockName); // 배당금
 			BigDecimal prevClose = yahooService.prevClose(stockName); // 종가
-			String findMarketCap = yahooService.findtMarketCap(stockName); // 시가총액
+			String findMarketCap = yahooService.findMarketCap(stockName); // 시가총액
 			
 			model.addAttribute("stockName", stockName);
 			model.addAttribute("lowValueInfoMap", lowValueInfoMap);
@@ -65,7 +65,7 @@ public class YahooController {
 		Stock stock = YahooFinance.get(stockName);
 
 		if (stock != null) {
-			String findMarketCap = yahooService.findtMarketCap(stockName); // 시가총액
+			String findMarketCap = yahooService.findMarketCap(stockName); // 시가총액
 			List<Map<String, Object>> lowValueInfoList = (List<Map<String, Object>>) yahooService.lowValueByStockStartYear(stockName); // 최저가 YY/MM, 가격 (상장후, 2015년 이후)
 
 			Calendar from = new GregorianCalendar(2020,2, 1); // 2020년 3월 1일

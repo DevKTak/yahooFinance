@@ -12,7 +12,7 @@
 
   <style>
       table, th, td {
-          border: 2px solid black;
+          border: 1px solid black;
           border-collapse: collapse;
           text-align: center;
       }
@@ -39,7 +39,7 @@
       <table style="width:100%" height="150">
         <tr>
           <th colspan="2" style="background: cornflowerblue;">시가총액</th>
-          <td colspan="2" th:text="*{findMarketCap}" style="background: yellow;"></td>
+          <td colspan="2" th:text="*{findMarketCap}"></td>
           <td colspan="2">자산</td>
           <td colspan="2">7천3백만 달러</td>
           <td>부채</td>
@@ -72,7 +72,7 @@
           <td>1995</td>
           <td>2007</td>
           <th:block th:each="infoMap : *{lowValueInfoList}">
-            <td th:text="${infoMap.lowValueDate}" style="background: yellow;">08/12</td>
+            <td th:text="${infoMap.lowValueDate}">08/12</td>
           </th:block>
           <td th:unless="${dummy}">더미1</td>
           <td th:unless="${dummy}">더미2</td>
@@ -88,11 +88,11 @@
           <td>27</td>
           <td>15년</td>
           <th:block th:each="infoMap : *{lowValueInfoList}">
-            <td th:text="${infoMap.lowValue}" style="background: yellow;">08/12</td>
+            <td th:text="${infoMap.lowValue}">08/12</td>
           </th:block>
           <td th:unless="${dummy}">더미3</td>
           <td th:unless="${dummy}">더미4</td>
-          <td th:text="*{lowValueInfoMap['lowValue']}" style="background: yellow">1.17</td>
+          <td th:text="*{lowValueInfoMap['lowValue']}">1.17</td>
           <td>신청</td>
           <td>자네 아직도 사람을 믿나???</td>
           <td>3단계: 줄다리기 게임</td>

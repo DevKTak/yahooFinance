@@ -339,7 +339,6 @@ public class Stock {
     
     public void setHistory(List<HistoricalQuote> history) {
         this.history = history;
-       
     }
     
     public HashMap<String, Object> getLowValue(Calendar from, Calendar to, Interval interval) throws IOException {
