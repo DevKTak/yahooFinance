@@ -44,7 +44,7 @@ public class YahooService {
 			stock = YahooFinance.get(stockName);
 
 			List<Map<String, Object>> lowValueList = new ArrayList<>();
-			lowValueList.add(stock.getLowValue(new GregorianCalendar(1900,0, 1), _DEFAULT_TO, Interval.DAILY));
+			lowValueList.add(stock.getLowValue(new GregorianCalendar(1800,0, 1), _DEFAULT_TO, Interval.DAILY));
 			lowValueList.add(stock.getLowValue(new GregorianCalendar(2005,0, 1), _DEFAULT_TO, Interval.DAILY));
 
 			return lowValueList;

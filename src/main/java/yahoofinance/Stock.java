@@ -344,7 +344,7 @@ public class Stock {
     public HashMap<String, Object> getLowValue(Calendar from, Calendar to, Interval interval) throws IOException {
         HistQuotes2Request hist= new HistQuotes2Request(this.symbol, from, to, interval);
         List<HistoricalQuote> history = hist.getResult();
-//        log.info("{} : ", history);
+        log.info("첫 최저가: {}년 {}월 {}일: ", history.get(0).getDate().get(1), history.get(0).getDate().get(2) + 1, history.get(0).getDate().get(5));
 
         String temp;
         int tempI = 0;
@@ -372,6 +372,7 @@ public class Stock {
          HashMap<String, Object> map = new HashMap<String, Object>();
          map.put("lowValueDate", String.valueOf(year).substring(2) + "/" + (month < 10 ? "0" : "") + month);
          map.put("lowValue", lowValue);
+         map.put("sangjangYear", history.get(0).getDate().get(1));
 
          return map;
     }

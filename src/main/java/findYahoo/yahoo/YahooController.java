@@ -85,7 +85,10 @@ public class YahooController {
 				yahooStock.setLowValueInfoMap(lowValueInfoMap); // 2020년 3월 ~ 4월 중 최저가
 				yahooStock.setPrevClose(prevClose); // 종가
 
+				int sangjangYear = (int) lowValueInfoList.get(0).get("sangjangYear"); // 상장년도
+
 				model.addAttribute("dummy", true);
+				model.addAttribute("sangjangYear", sangjangYear);
 			} else {
 				bindingResult.rejectValue("stockName", "errorTest", "없는 게임입니다. 다시 선택 해주시기 바랍니다.");
 				bindingResult.addError(new FieldError("yahooStock", "stockName", "없는 게임입니다. 다시 선택 해주시기 바랍니다."));
